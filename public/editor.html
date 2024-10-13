@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog : Editor</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #loginForm {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1E90FF;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        #loginForm input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #loginForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #loginForm button:hover {
+            background-color: #1873CC;
+        }
+        .editor-toolbar {
+            margin-bottom: 10px;
+        }
+        .editor-toolbar button {
+            margin-right: 5px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .editor-toolbar button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginForm">
+        <div class="login-container">
+            <img src="/img/apo.png" alt="Logo" class="logo">
+            <input type="text" id="username" placeholder="Kullanıcı Adı Gir Yeğen" required>
+            <input type="password" id="password" placeholder="Şifresiz Olurmu" required>
+            <button onclick="login()">DEVAM ET</button>
+        </div>
+    </div>
+
+    <div id="content" style="display: none;">
+        <div class="banner">
+            <input type="file" accept="image/*" id="banner-upload" hidden>
+            <label for="banner-upload" class="banner-upload-btn"><img src="img/upload.png" alt="upload banner"></label>
+        </div>
+        
+        <div class="blog">
+            <textarea type="text" class="title" placeholder="Blog Başlığı..." maxlength="100"></textarea>
+            <div class="editor-toolbar">
+                <button onclick="formatText('bold')">Kalın</button>
+                <button onclick="formatText('italic')">İtalik</button>
+                <button onclick="formatText('heading')">Başlık</button>
+                <button onclick="insertCode()">Kod</button>
+                <button onclick="insertLink()">Link</button>
+            </div>
+            <textarea type="text" class="article" placeholder="Blog İçeriği..." maxlength="2000"></textarea>
+        </div>
+
+        <div class="blog-options">
+            <button class="btn dark publish-btn">Paylaş</button>
+            <input type="file" accept="image/*" id="image-upload" hidden>
+            <label for="image-upload" class="btn grey upload-btn">Resim Yükle</label>
+        </div>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <!-- Your firebase config file -->
+    <script src="js/firebase.js"></script>
+
+    <!-- Your editor script -->
+    <script src="js/editor.js"></script>
+
+    <script>
+    const correctUsername = "admin";
+    const correctPassword = "bekirhub";
+
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username === correctUsername && password === correctPassword) {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        } else {
+            alert("Hatalı kullanıcı adı veya şifre!");
+        }
+    }
+
+    // Sayfa yüklendiğinde içeriği gizle
+    window.onload = function() {
+        document.getElementById("content").style.display = "none";
+    }
+    </script>
+</body>
+</html>
